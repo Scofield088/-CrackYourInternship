@@ -1,0 +1,96 @@
+#Find the Duplicate Number
+class Solution {
+    public int findDuplicate(int[] nums) {
+        int n=nums.length;
+        Set<Integer> st=new HashSet<>();
+        for(int i=0;i<n;i++){
+            if(st.contains(nums[i])) return nums[i];
+            st.add(nums[i]);
+        }
+        return -1;
+    }
+}
+
+#Sort Colors
+class Solution {
+    public void sortColors(int[] nums) {
+        int n=nums.length;
+        int low=0;
+        int high=n-1;
+        int mid=0;
+        while(mid<=high){
+            if(nums[mid]==0){
+                int temp=nums[low];
+                nums[low]=nums[mid];
+                nums[mid]=temp;
+                low++;
+                mid++;
+            }
+            else if(nums[mid]==1){
+                mid++;
+            }
+            else if(nums[mid]==2){
+                int temp=nums[high];
+                nums[high]=nums[mid];
+                nums[mid]=temp;
+                high--;
+            }
+        }
+    }
+}
+
+
+#Remove Duplicates from sorted array
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int n=nums.length;
+        int j=0;
+        for(int i=1;i<n;i++){
+            if(nums[i]!=nums[j]){
+                j++;
+                nums[j]=nums[i];
+            }
+        }
+        return j+1;
+    }
+}
+
+
+#Move zeroes
+class Solution {
+    public void moveZeroes(int[] nums) {
+        int n=nums.length;
+        int j=-1;
+        for(int i=0;i<n;i++){
+            if(nums[i]==0){
+                j=i;
+                break;
+            }
+        }
+        if(j==-1){
+            return ;
+        }
+        for(int i=j+1;i<n;i++){
+            if(nums[i]!=0){
+                int temp=nums[i];
+                nums[i]=nums[j];
+                nums[j]=temp;
+                j++;
+            }
+        }
+    }
+}
+
+#Best time to Buy and sell stock
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n=prices.length;
+        int min=Integer.MAX_VALUE;
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<n;i++){
+            min=Math.min(min,prices[i]);
+            max=Math.max(max,prices[i]-min);
+        }
+        return max;
+    }
+}
