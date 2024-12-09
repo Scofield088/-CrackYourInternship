@@ -146,3 +146,33 @@ class Solution {
         }
     }
 }
+
+
+
+
+# Add Binary
+class Solution {
+    public String addBinary(String a, String b) {
+        int n=a.length();
+        int m=b.length();
+        StringBuffer ans=new StringBuffer();
+        int i=0;
+        int carry=0;
+        int sum=0;
+        while(i<n || i<m || carry!=0){
+            int x=0;
+            if(i<n && a.charAt(n-i-1)=='1'){
+                x=1;
+            }
+            int y=0;
+            if(i<m && b.charAt(m-i-1)=='1'){
+                y=1;
+            }
+            sum=x+y+carry;
+            ans.append(sum%2);
+            carry=sum/2;
+            i++;
+        }
+        return ans.reverse().toString();
+    }
+}
