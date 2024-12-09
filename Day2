@@ -1,0 +1,148 @@
+#Two Sum
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int n=nums.length;
+        int ans[]=new int[2];
+        Map<Integer,Integer> mp=new HashMap<>();
+        for(int i=0;i<n;i++){
+            int dif=target-nums[i];
+            if(mp.containsKey(dif)){
+                ans[0]=mp.get(dif);
+                ans[1]=i;
+            }
+            mp.put(nums[i],i);
+        }
+        return ans;
+    }
+}
+
+
+
+#Three Sum
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        int n=nums.length;
+        Arrays.sort(nums);
+        List<List<Integer>> ans=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            if(i!=0 && nums[i]==nums[i-1]) continue;
+            int j=i+1;
+            int k=n-1;
+            while(j<k){
+                int sum=nums[i]+nums[j]+nums[k];
+                if(sum<0){
+                    j++;
+                }
+                else if(sum>0){
+                    k--;
+                }
+                else{
+                    List<Integer> temp=Arrays.asList(nums[i],nums[j],nums[k]);
+                    ans.add(temp);
+                    j++;
+                    k--;
+                    while(j<k && nums[j]==nums[j-1]) j++;
+                    while(j<k && nums[k]==nums[k+1]) k--;
+                }
+            }
+        }
+        return ans;
+    }
+}
+
+
+
+
+#Spiral Matrix
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> ans=new ArrayList<>();
+        int n=matrix.length;
+        int m=matrix[0].length;
+        int top=0;
+        int bottom=n-1;
+        int left=0;
+        int right=m-1;
+        while(top<=bottom && left<=right){
+            for(int i=left;i<=right;i++){
+                ans.add(matrix[top][i]);
+            }
+            top++;
+            for(int i=top;i<=bottom;i++){
+                ans.add(matrix[i][right]);
+            }
+            right--;
+            if(top<=bottom){
+                for(int i=right;i>=left;i--){
+                    ans.add(matrix[bottom][i]);
+                }
+                bottom--;
+            }
+            if(left<=right){
+                for(int i=bottom;i>=top;i--){
+                    ans.add(matrix[i][left]);
+                }
+                left++;
+            }
+        }
+        return ans;
+    }
+}
+
+
+
+
+#Majority Element
+class Solution {
+    public int majorityElement(int[] nums) {
+        int n=nums.length;
+        int cnt=0;
+        int el=0;
+        for(int i=0;i<n;i++){
+            if(cnt==0){
+                el=nums[i];
+                cnt=1;
+            }
+            else if(el==nums[i]){
+                cnt++;
+            }
+            else{
+                cnt--;
+            }
+        }
+        int cnt1=0;
+        for(int i=0;i<n;i++){
+            if(el==nums[i]){
+                cnt1++;
+            }
+        }
+        if(cnt1>n/2){
+            return el;
+        }
+        return -1;
+    }
+}
+
+
+
+#Rotate Image
+class Solution {
+    public void rotate(int[][] matrix) {
+        int n=matrix.length;
+        int m=matrix[0].length;
+        for(int i=0;i<n;i++){
+            for(int j=i;j<m;j++){
+                int temp=matrix[i][j];
+                matrix[i][j]=matrix[j][i];
+                matrix[j][i]=temp;
+            }
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m/2;j++){
+                int temp=matrix[i][j];
+                matrix[i][j]=matrix[i][n-j-1];
+                matrix[i][n-j-1]=temp;
+            }
+        }
+    }
+}
