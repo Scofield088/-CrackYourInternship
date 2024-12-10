@@ -1,0 +1,174 @@
+# 4sum
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        int n=nums.length;
+        Arrays.sort(nums);
+        List<List<Integer>> ans=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            if(i!=0 && nums[i]==nums[i-1]) continue;
+            for(int j=i+1;j<n;j++){
+                if(j!=i+1 && nums[j]==nums[j-1]) continue;
+                int k=j+1;
+                int l=n-1;
+                while(k<l){
+                    long sum=(long)nums[i]+(long)nums[j]+(long)nums[k]+(long)nums[l];
+                    if(sum>target){
+                        l--;
+                    }
+                    else if(sum<target){
+                        k++;
+                    }
+                    else{
+                        List<Integer> temp=Arrays.asList(nums[i],nums[j],nums[k],nums[l]);
+                        ans.add(temp);
+                        k++;
+                        l--;
+                        while(k<l && nums[k]==nums[k-1]) k++;
+                        while(k<l && nums[l]==nums[l+1]) l--;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
+
+
+
+
+#Subarry Sum Equals K
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int n=nums.length;
+        int cnt=0;
+        int sum=0;
+        Map<Integer,Integer> mp=new HashMap<>();
+        mp.put(sum,1);
+        for(int i=0;i<n;i++){
+            sum+=nums[i];
+            int rem=sum-k;
+            cnt+=mp.getOrDefault(rem,0);
+            mp.put(sum,mp.getOrDefault(sum,0)+1);
+        }
+        return cnt;
+    }
+}
+
+
+
+
+
+#Subarray Sums Divisible by K
+class Solution {
+    public int subarraysDivByK(int[] nums, int k) {
+        int n=nums.length;
+        int sum=0;
+        int cnt=0;
+        Map<Integer,Integer> mp=new HashMap<>();
+        mp.put(0,1);
+        for(int i=0;i<n;i++){
+            sum+=nums[i];
+            int div=sum%k;
+            if(div<0){
+                div=(div+k)%k;
+            }
+            cnt+=mp.getOrDefault(div,0);
+            mp.put(div,mp.getOrDefault(div,0)+1);
+        }
+        return cnt;
+    }
+}
+
+
+
+#Set Matrix Equals Zero
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int n=matrix.length;
+        int m=matrix[0].length;
+        int col0=1;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(matrix[i][j]==0){
+                    matrix[i][0]=0;
+                    if(j!=0){
+                        matrix[0][j]=0;
+                    }
+                    else{
+                        col0=0;
+                    }
+                }
+            }
+        }
+        for(int i=1;i<n;i++){
+            for(int j=1;j<m;j++){
+                if(matrix[i][j]!=0){
+                    if(matrix[i][0]==0 || matrix[0][j]==0){
+                        matrix[i][j]=0;
+                    }
+                }
+            }
+        }
+        if(matrix[0][0]==0){
+            for(int j=0;j<m;j++){
+                matrix[0][j]=0;
+            }
+        }
+        if(col0==0){
+            for(int i=0;i<n;i++){
+                matrix[i][0]=0;
+            }
+        }
+    }
+}
+
+
+
+#Chocolate Distribution Problem
+
+class Solution {
+    public int findMinDiff(ArrayList<Integer> arr, int m) {
+        // your code here
+        int n=arr.size();
+        Collections.sort(arr);
+        int min=Integer.MAX_VALUE;
+        for(int i=0;i+m-1<n;i++){
+            int dif=arr.get(i+m-1)-arr.get(i);
+            min=Math.min(min,dif);
+        }
+        return min;
+    }
+}
+
+
+
+#Merge Sorted Array
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int k=m+n-1;
+        int i=m-1;
+        int j=n-1;
+        while(i>=0 && j>=0){
+            if(nums2[j]>nums1[i]){
+                nums1[k]=nums2[j];
+                j--;
+                k--;
+            }
+            else{
+                nums1[k]=nums1[i];
+                i--;
+                k--;
+            }
+        }
+        while(i>=0){
+            nums1[k]=nums1[i];
+            i--;
+            k--;
+        }
+        while(j>=0){
+            nums1[k]=nums2[j];
+            j--;
+            k--;
+        }
+    }
+}
