@@ -1,0 +1,74 @@
+#Max Product of 3 numbers
+class Solution {
+    public int maximumProduct(int[] nums) {
+        int n=nums.length;
+        Arrays.sort(nums);
+        int pdt=Math.max(nums[n-3]*nums[n-2]*nums[n-1],nums[0]*nums[1]*nums[n-1]);
+        return pdt;
+    }
+}
+
+
+#ceil of sorted array(ik)
+
+#find pair diff
+class Solution {
+    public boolean findPair(int[] arr, int x) {
+        // code here
+        int n=arr.length;
+        HashSet<Integer> mp=new HashSet<>();
+        for(int i=0;i<n;i++){
+            int dif=arr[i]-x;
+            int sum=arr[i]+x;
+            if(mp.contains(dif) || mp.contains(sum)){
+                return true;
+            }
+            mp.add(arr[i]);
+        }
+        return false;
+    }
+}
+
+
+#subset
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> ans=new ArrayList<>();
+        List<Integer> ds=new ArrayList<>();
+        int n=nums.length;
+        sub(nums,0,n,ans,ds);
+        return ans;
+    }
+    public void sub(int nums[],int idx,int n,List<List<Integer>> ans,List<Integer> ds){
+        if(idx==n){
+           ans.add(new ArrayList<>(ds));
+           return;
+        }
+        ds.add(nums[idx]);
+        sub(nums,idx+1,n,ans,ds);
+        ds.remove(ds.size()-1);
+        sub(nums,idx+1,n,ans,ds);
+    }
+}
+
+
+#subset2
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> ans=new ArrayList<>();
+        List<Integer> ds=new ArrayList<>();
+        int n=nums.length;
+        Arrays.sort(nums);
+        sub(n,nums,0,ans,ds);
+        return ans;
+    }
+    public void sub(int n,int nums[],int idx,List<List<Integer>> ans,List<Integer> ds){
+        ans.add(new ArrayList<>(ds));
+        for(int i=idx;i<n;i++){
+            if(i!=idx && nums[i]==nums[i-1]) continue;
+            ds.add(nums[i]);
+            sub(n,nums,i+1,ans,ds);
+            ds.remove(ds.size()-1);
+        }
+    }
+} 
